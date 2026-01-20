@@ -25,14 +25,29 @@ main proc
         call newline  
         
        mov al,n 
-       sub al,m   ; perform addition 
-       add al,48  
-         
+       add al,m   ; perform addition 
+       mov ah,0    ; ax= ah, al
+       aaa        ; adjust after addition
+       
+       mov bx,ax   ; store data ax in bx 
+       ;bx = bh,bl
+       
+       
+       ; for show aschii
+       add bh, 30h
+       add bl, 30h
+       
+       
+       ;for 2 digit, show output full bx, 1:bh 2:bl
        print 'result : '
-       mov dl, al      ;output bh
+       mov dl, bh      ;output bh
        mov ah,02h
        int 21h
-   
+       
+       mov dl,bl        ;output bl
+       mov ah,02h
+       int 21h 
+  
       ;exit program
       mov ah,4ch
       int 21h
